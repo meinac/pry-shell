@@ -1,6 +1,14 @@
 AllCops:
   TargetRubyVersion: 2.5
 
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - bin/**/*
+    - exe/**/*
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes

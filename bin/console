@@ -11,5 +11,6 @@ require "pry/shell"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start(__FILE__)
+a = 1
+
+binding.pry_shell

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Pry
-  module Shell
+class Pry
+  class Shell
     VERSION = "0.1.0"
   end
 end
