@@ -4,14 +4,14 @@ class Pry
   class Shell
     class Registry
       def initialize
-        @clients = []
+        @clients = {}
       end
 
-      def connect(name:, host:)
-        Client.new(name, host).tap do |client|
+      def connect(id:, name:, host:)
+        Client.new(id, name, host).tap do |client|
           Logger.debug("New client connected - #{client}")
 
-          @clients << client
+          @clients[id] = client
         end
       end
 

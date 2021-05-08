@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "socket"
+require "securerandom"
 
 class Pry
   class Shell
@@ -18,7 +19,7 @@ class Pry
       end
 
       def run
-        registry.connect(id)
+        registry.connect(id: id, **attributes)
 
         setup if registry.request(id)
       end
@@ -35,6 +36,10 @@ class Pry
       end
 
       def id
+        @id ||= SecureRandom.uuid
+      end
+
+      def attributes
         { name: $PROGRAM_NAME, host: Socket.gethostname }
       end
 

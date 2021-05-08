@@ -3,7 +3,8 @@
 class Pry
   class Shell
     class Client
-      def initialize(process_name, host)
+      def initialize(id, process_name, host)
+        @id = id
         @process_name = process_name
         @host = host
       end
