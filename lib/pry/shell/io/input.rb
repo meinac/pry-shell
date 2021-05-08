@@ -7,14 +7,7 @@ class Pry
     module IO
       class Input < Base
         def readline(prompt)
-          if Readline == object
-            object.readline(prompt, true)
-          elsif object.method(:readline).arity == 1
-            object.readline(prompt)
-          else
-            $stdout.print prompt
-            object.readline
-          end
+          object.readline(prompt, true)
         end
       end
     end
