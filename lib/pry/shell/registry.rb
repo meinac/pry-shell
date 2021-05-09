@@ -14,18 +14,6 @@ class Pry
           @clients[id] = client
         end
       end
-
-      def request(*)
-        true
-      end
-
-      def input
-        IO::Input.new(Pry.config.input)
-      end
-
-      def output
-        IO::Output.new(Pry.config.output)
-      end
     end
   end
 end

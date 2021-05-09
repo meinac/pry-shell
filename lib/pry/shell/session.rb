@@ -19,14 +19,18 @@ class Pry
       end
 
       def run
-        registry.connect(id: id, **attributes)
+        setup
 
-        setup if registry.request(id)
+        Pry.start(object)
       end
 
       private
 
       attr_reader :object, :host, :port
+
+      def client
+        @client ||= registry.connect(id: id, **attributes)
+      end
 
       def registry
         @registry ||= begin
@@ -48,10 +52,8 @@ class Pry
       end
 
       def setup
-        Pry.config.input = registry.input
-        Pry.config.output = registry.output
-
-        Pry.start(object)
+        Pry.config.input = client.input
+        Pry.config.output = client.output
       end
     end
   end
