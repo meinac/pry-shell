@@ -11,10 +11,12 @@ class Pry
 
       attr_reader :id
 
-      def initialize(id, process_name, host)
+      def initialize(id, process_name, host, location)
         @id = id
         @process_name = process_name
         @host = host
+        @location = location
+        @created_at = Time.now
       end
 
       def input
@@ -26,7 +28,7 @@ class Pry
       end
 
       def to_s
-        "#{process_name} @#{host}"
+        "#{process_name} @#{host} - #{full_location}"
       end
 
       def current?
@@ -35,7 +37,11 @@ class Pry
 
       private
 
-      attr_reader :process_name, :host
+      attr_reader :process_name, :host, :location, :created_at
+
+      def full_location
+        location.join(":")
+      end
     end
   end
 end

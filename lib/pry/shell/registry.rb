@@ -14,8 +14,8 @@ class Pry
         @clients = {}
       end
 
-      def register(id:, name:, host:)
-        Client.new(id, name, host).tap do |client|
+      def register(id:, name:, host:, location:)
+        Client.new(id, name, host, location).tap do |client|
           Logger.debug("New client connected - #{client}")
 
           @clients[id] = client
