@@ -2,10 +2,13 @@
 
 require "logger"
 require "forwardable"
+require "fileutils"
 
 class Pry
   class Shell
     class Logger
+      LOG_FOLDER = "tmp"
+
       class << self
         extend Forwardable
 
@@ -14,7 +17,17 @@ class Pry
         private
 
         def logger
-          @logger ||= ::Logger.new($stdout)
+          @logger ||= ::Logger.new(log_file)
+        end
+
+        def log_file
+          File.open(log_file_name, "w+").tap { |f| f.sync = true }
+        end
+
+        def log_file_name
+          FileUtils.mkdir_p LOG_FOLDER
+
+          File.join(LOG_FOLDER, "pry_shell.log")
         end
       end
     end
