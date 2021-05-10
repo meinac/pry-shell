@@ -22,6 +22,8 @@ class Pry
         setup
 
         Pry.start(object)
+      rescue DRb::DRbConnError
+        puts "DRb connection failed!"
       end
 
       private
