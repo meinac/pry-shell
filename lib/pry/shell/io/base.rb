@@ -6,13 +6,22 @@ class Pry
       class Base
         include DRb::DRbUndumped
 
-        def initialize(object)
+        def initialize(client, object)
+          @client = client
           @object = object
         end
 
         private
 
-        attr_reader :object
+        attr_reader :client, :object
+
+        def wait_until_current
+          sleep(0.5) until current?
+        end
+
+        def current?
+          client.current?
+        end
       end
     end
   end

@@ -29,7 +29,7 @@ class Pry
       attr_reader :object, :host, :port
 
       def client
-        @client ||= registry.connect(id: id, **attributes)
+        @client ||= registry.register(id: id, **attributes)
       end
 
       def registry

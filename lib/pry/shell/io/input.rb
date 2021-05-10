@@ -7,7 +7,11 @@ class Pry
     module IO
       class Input < Base
         def readline(prompt)
-          object.readline(prompt, true)
+          wait_until_current
+
+          string = object.readline(prompt, true)
+
+          Command.execute(client, string)
         end
       end
     end

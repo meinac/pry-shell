@@ -4,11 +4,33 @@ class Pry
   class Shell
     module IO
       class Output < Base
-        extend Forwardable
+        def puts(data)
+          wait_until_current
 
-        def_delegators :object, :puts, :print, :printf, :write
+          object.puts data
+        end
+
+        def print(data)
+          wait_until_current
+
+          object.print data
+        end
+
+        def printf(data)
+          wait_until_current
+
+          object.printf data
+        end
+
+        def write(data)
+          wait_until_current
+
+          object.printf data
+        end
 
         def <<(data)
+          wait_until_current
+
           object << data
           self
         end

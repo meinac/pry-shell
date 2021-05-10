@@ -9,6 +9,8 @@ class Pry
       # we should make sure the instance lives on the server.
       include DRb::DRbUndumped
 
+      attr_reader :id
+
       def initialize(id, process_name, host)
         @id = id
         @process_name = process_name
@@ -16,15 +18,19 @@ class Pry
       end
 
       def input
-        @input ||= IO::Input.new(Pry.config.input)
+        @input ||= IO::Input.new(self, Pry.config.input)
       end
 
       def output
-        @output ||= IO::Output.new(Pry.config.output)
+        @output ||= IO::Output.new(self, Pry.config.output)
       end
 
       def to_s
         "#{process_name} @#{host}"
+      end
+
+      def current?
+        Shell.registry.current == self
       end
 
       private

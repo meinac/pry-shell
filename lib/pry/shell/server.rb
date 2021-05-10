@@ -5,10 +5,10 @@ require "drb"
 class Pry
   class Shell
     class Server
-      def initialize(host, port, auto_connect)
+      def initialize(host, port, registry)
         @host = host
         @port = port
-        @auto_connect = auto_connect
+        @registry = registry
       end
 
       def run
@@ -19,14 +19,10 @@ class Pry
 
       private
 
-      attr_reader :host, :port, :auto_connect
+      attr_reader :host, :port, :registry
 
       def uri
         "druby://#{host}:#{port}"
-      end
-
-      def registry
-        Registry.new
       end
     end
   end
