@@ -3,6 +3,7 @@
 require "socket"
 require "securerandom"
 
+require_relative "patches/rack_timeout"
 require_relative "repl"
 
 class Pry
@@ -21,9 +22,13 @@ class Pry
       end
 
       def run
+        Thread.current[:pry_shell_active?] = true
+
         Pry.start(object, pry_options)
       rescue DRb::DRbConnError
         puts "DRb connection failed!"
+      ensure
+        Thread.current[:pry_shell_active?] = false
       end
 
       private
