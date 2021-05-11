@@ -24,13 +24,13 @@ class Pry
       end
 
       def run
-        Thread.current[:pry_shell_active?] = true
+        Shell.active_shell_options = pry_options
 
         Pry.start(object, pry_options)
       rescue DRb::DRbConnError
         puts "DRb connection failed!"
       ensure
-        Thread.current[:pry_shell_active?] = false
+        Shell.active_shell_options = nil
       end
 
       private

@@ -30,6 +30,14 @@ class Pry
 
         new(host, port, registry).run
       end
+
+      def active_shell_options(thread: Thread.current)
+        thread[:active_shell_options]
+      end
+
+      def active_shell_options=(value)
+        Thread.current[:active_shell_options] = value
+      end
     end
 
     def initialize(host, port, registry)

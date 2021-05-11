@@ -5,7 +5,7 @@ class Pry
     module Patches
       module RackTimeout
         def initialize(&on_timeout)
-          @on_timeout = -> (thread) { thread[:pry_shell_active?] || on_timeout || ON_TIMEOUT }
+          @on_timeout = -> (thread) { Shell.active_shell_options(thread: thread) || on_timeout || ON_TIMEOUT }
           @scheduler  = Rack::Timeout::Scheduler.singleton
         end
       end
