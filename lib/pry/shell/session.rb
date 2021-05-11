@@ -3,6 +3,8 @@
 require "socket"
 require "securerandom"
 
+require_relative "repl"
+
 class Pry
   class Shell
     class Session
@@ -21,7 +23,7 @@ class Pry
       def run
         setup
 
-        Pry.start(object)
+        Pry.start(object, driver: Pry::Shell::Repl)
       rescue DRb::DRbConnError
         puts "DRb connection failed!"
       end
