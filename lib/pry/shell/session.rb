@@ -21,9 +21,7 @@ class Pry
       end
 
       def run
-        setup
-
-        Pry.start(object, driver: Pry::Shell::Repl)
+        Pry.start(object, pry_options)
       rescue DRb::DRbConnError
         puts "DRb connection failed!"
       end
@@ -31,6 +29,15 @@ class Pry
       private
 
       attr_reader :object, :host, :port
+
+      def pry_options
+        {
+          driver: Pry::Shell::Repl,
+          pager: false,
+          input: client.input,
+          output: client.output
+        }
+      end
 
       def client
         @client ||= registry.register(id: id, **attributes)
@@ -53,11 +60,6 @@ class Pry
 
       def uri
         "druby://#{host}:#{port}"
-      end
-
-      def setup
-        Pry.config.input = client.input
-        Pry.config.output = client.output
       end
     end
   end
