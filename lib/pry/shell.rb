@@ -20,7 +20,7 @@ require_relative "shell/ui/session"
 class Pry
   class Shell
     DEFAULT_HOST = "localhost"
-    DEFAULT_PORT = "8787"
+    DEFAULT_PORT = "1881"
 
     class << self
       attr_reader :registry

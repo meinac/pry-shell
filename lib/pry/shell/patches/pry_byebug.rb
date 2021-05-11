@@ -21,5 +21,4 @@ begin
   Pry.singleton_class.prepend(Pry::Shell::Patches::PryByebug)
   Pry.singleton_class.alias_method(:start, :start_with_pry_byebug)
 rescue LoadError # rubocop:disable Lint/SuppressedException
-  puts "LOAD ERROR"
 end
