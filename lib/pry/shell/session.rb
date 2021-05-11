@@ -3,6 +3,8 @@
 require "socket"
 require "securerandom"
 
+require_relative "patches/object"
+require_relative "patches/pry_byebug"
 require_relative "patches/rack_timeout"
 require_relative "repl"
 
