@@ -44,6 +44,7 @@ class Pry
           pager: false,
           input: client.input,
           output: client.output,
+          editor: client.editor,
           pager_proxy: client.pager_proxy # This is our own config
         }
       end

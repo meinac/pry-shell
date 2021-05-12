@@ -27,6 +27,10 @@ class Pry
         @output ||= IO::Output.new(self, Pry.config.output)
       end
 
+      def editor
+        @editor ||= proc { |file, line| IO::Editor.open(file, line) }
+      end
+
       def pager_proxy
         @pager_proxy ||= IO::Pager::Proxy.new(output)
       end
