@@ -6,7 +6,7 @@ class Pry
       class About < Base
         HEADER = "PRY-SHELL About"
         CONTENT = <<~MARKDOWN
-          pry-shell version `#{VERSION}`
+          pry-shell version "#{VERSION}"
 
           Pry-shell provides you a standalone shell for accessing multiple `pry` sessions running on different processes.
           You can switch between sessions by using the "\\h" command.
