@@ -27,6 +27,10 @@ class Pry
         @output ||= IO::Output.new(self, Pry.config.output)
       end
 
+      def pager_proxy
+        @pager_proxy ||= IO::Pager::Proxy.new(output)
+      end
+
       def to_s
         "#{process_name} @#{host} - #{full_location}"
       end

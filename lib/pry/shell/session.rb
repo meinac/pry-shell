@@ -4,6 +4,7 @@ require "socket"
 require "securerandom"
 
 require_relative "patches/object"
+require_relative "patches/pager"
 require_relative "patches/pry_byebug"
 require_relative "patches/rack_timeout"
 require_relative "repl"
@@ -42,7 +43,8 @@ class Pry
           driver: Pry::Shell::Repl,
           pager: false,
           input: client.input,
-          output: client.output
+          output: client.output,
+          pager_proxy: client.pager_proxy # This is our own config
         }
       end
 
