@@ -7,11 +7,12 @@ class Pry
     class Registry
       include DRb::DRbUndumped
 
-      attr_reader :auto_connect, :clients, :current
+      attr_reader :auto_connect, :clients, :current, :mutex
 
       def initialize(auto_connect)
         @auto_connect = auto_connect
         @clients = {}
+        @mutex = Mutex.new
       end
 
       def register(id:, name:, host:, location:)
@@ -26,10 +27,14 @@ class Pry
       def connect_to(client)
         # This thread is necessary because `UI::Session.draw!`
         # puts the main thread into sleep!
-        Thread.start do
-          UI::Session.draw!
+        mutex.synchronize do
+          return if current
 
-          @current = client
+          Thread.start do
+            UI::Session.draw!
+
+            @current = client
+          end
         end
       end
 
