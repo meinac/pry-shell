@@ -4,7 +4,7 @@ class Pry
   class Shell
     module Patches
       module PryByebug
-        def start_with_pry_byebug(target, options = {})
+        def start_with_pry_byebug(target = nil, options = {})
           return start_without_pry_byebug(target, options) if Shell.active_shell_options
 
           super
