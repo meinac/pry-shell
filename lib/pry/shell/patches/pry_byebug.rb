@@ -5,7 +5,7 @@ class Pry
     module Patches
       module PryByebug
         def start_with_pry_byebug(target, options = {})
-          return start_without_pry_byebug(target, options) if Thread.current[:pry_shell_active?]
+          return start_without_pry_byebug(target, options) if Shell.active_shell_options
 
           super
         end
