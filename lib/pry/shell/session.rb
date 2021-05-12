@@ -65,7 +65,12 @@ class Pry
       end
 
       def attributes
-        { name: $PROGRAM_NAME, host: Socket.gethostname, location: object.source_location }
+        {
+          name: $PROGRAM_NAME,
+          host: Socket.gethostname,
+          pid: Process.pid,
+          location: object.source_location
+        }
       end
 
       def uri

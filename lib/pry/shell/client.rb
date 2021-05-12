@@ -9,13 +9,16 @@ class Pry
       # we should make sure the instance lives on the server.
       include DRb::DRbUndumped
 
+      MAX_PROCESS_NAME = 50
+
       attr_reader :id
 
-      def initialize(id, process_name, host, location)
+      def initialize(id, process_name, host, pid, location)
         @id = id
         @process_name = process_name
         @host = host
         @location = location
+        @pid = pid
         @created_at = Time.now
       end
 
@@ -36,7 +39,7 @@ class Pry
       end
 
       def to_s
-        "#{process_name} @#{host} - #{full_location}"
+        "[#{pid}] \"#{humanized_process_name}\" @\"#{host}\" - #{full_location}"
       end
 
       def current?
@@ -45,10 +48,14 @@ class Pry
 
       private
 
-      attr_reader :process_name, :host, :location, :created_at
+      attr_reader :process_name, :host, :pid, :location, :created_at
 
       def full_location
         location.join(":")
+      end
+
+      def humanized_process_name
+        process_name.length > MAX_PROCESS_NAME ? "#{process_name[0..50]}..." : process_name
       end
     end
   end
