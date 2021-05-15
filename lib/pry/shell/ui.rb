@@ -8,6 +8,7 @@ class Pry
       class << self
         def draw!
           UI::Menu.draw!
+          draw!
         rescue StopMainUI
           sleep
           draw!

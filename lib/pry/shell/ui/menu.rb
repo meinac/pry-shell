@@ -23,6 +23,9 @@ class Pry
             switch_to(selection)
           end
 
+          # Override this to remove "press any key" prompt
+          def draw_footer; end
+
           def switch_to(selected_ui)
             MENU_ACTIONS[selected_ui].call
           end

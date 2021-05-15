@@ -42,7 +42,7 @@ class Pry
           end
 
           def draw_footer
-            return_menu_prompt
+            prompt.keypress("Press any key to return to the menu...")
           end
 
           def header
@@ -59,12 +59,6 @@ class Pry
 
           def print_markdown(text)
             puts TTY::Markdown.parse(text)
-          end
-
-          def return_menu_prompt
-            prompt.keypress("Press any key to return to the menu...")
-
-            Menu.draw!
           end
         end
       end
