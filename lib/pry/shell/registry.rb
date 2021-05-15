@@ -7,10 +7,9 @@ class Pry
     class Registry
       include DRb::DRbUndumped
 
-      attr_reader :auto_connect, :clients, :current, :mutex
+      attr_reader :clients, :current, :mutex
 
-      def initialize(auto_connect)
-        @auto_connect = auto_connect
+      def initialize
         @clients = {}
         @mutex = Mutex.new
       end
@@ -20,7 +19,7 @@ class Pry
           Logger.debug("New client connected - #{client}")
 
           @clients[id] = client
-          connect_to(client) if auto_connect
+          connect_to(client) if Shell.configuration.auto_connect
         end
       end
 

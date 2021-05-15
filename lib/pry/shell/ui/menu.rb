@@ -7,11 +7,13 @@ class Pry
         HEADER = "PRY-SHELL Main Menu"
         ITEMS = [
           { name: "1) Available sessions", value: "list" },
-          { name: "2) About pry-shell", value: "about" },
-          { name: "3) Quit", value: "quit" }
+          { name: "2) Configuration", value: "configuration" },
+          { name: "3) About pry-shell", value: "about" },
+          { name: "4) Quit", value: "quit" }
         ].freeze
         MENU_ACTIONS = {
           "list" => -> { List.draw! },
+          "configuration" => -> { Configuration.draw! },
           "about" => -> { About.draw! },
           "quit" => -> { clear! && exit(0) }
         }.freeze

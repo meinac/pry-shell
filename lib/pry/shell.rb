@@ -3,6 +3,7 @@
 require_relative "shell/version"
 require_relative "shell/client"
 require_relative "shell/command"
+require_relative "shell/configuration"
 require_relative "shell/logger"
 require_relative "shell/registry"
 require_relative "shell/server"
@@ -15,6 +16,8 @@ require_relative "shell/io/pager"
 require_relative "shell/ui"
 require_relative "shell/ui/base"
 require_relative "shell/ui/about"
+require_relative "shell/ui/configuration"
+require_relative "shell/ui/configuration/auto_connect"
 require_relative "shell/ui/list"
 require_relative "shell/ui/menu"
 require_relative "shell/ui/session"
@@ -25,12 +28,9 @@ class Pry
     DEFAULT_PORT = "1881"
 
     class << self
-      attr_reader :registry
-
-      def run(host:, port:, auto_connect:)
-        @registry = Registry.new(auto_connect)
-
-        new(host, port, registry).run
+      def run
+        run_server
+        draw_ui
       end
 
       def active_shell_options(thread: Thread.current)
@@ -40,29 +40,24 @@ class Pry
       def active_shell_options=(value)
         Thread.current[:active_shell_options] = value
       end
-    end
 
-    def initialize(host, port, registry)
-      @host = host
-      @port = port
-      @registry = registry
-    end
+      def configuration
+        @configuration ||= Configuration.new
+      end
 
-    def run
-      run_server
-      draw_ui
-    end
+      def registry
+        @registry ||= Registry.new
+      end
 
-    private
+      private
 
-    attr_reader :host, :port, :registry
+      def run_server
+        Server.run
+      end
 
-    def run_server
-      Server.new(host, port, registry).run
-    end
-
-    def draw_ui
-      UI.draw!
+      def draw_ui
+        UI.draw!
+      end
     end
   end
 end

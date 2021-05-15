@@ -5,24 +5,18 @@ require "drb"
 class Pry
   class Shell
     class Server
-      def initialize(host, port, registry)
-        @host = host
-        @port = port
-        @registry = registry
-      end
+      class << self
+        def run
+          Logger.info("Running Drb server on '#{uri}'")
 
-      def run
-        Logger.info("Running Drb server on '#{uri}'")
+          DRb.start_service(uri, Shell.registry)
+        end
 
-        DRb.start_service(uri, registry)
-      end
+        private
 
-      private
-
-      attr_reader :host, :port, :registry
-
-      def uri
-        "druby://#{host}:#{port}"
+        def uri
+          "druby://#{Shell.configuration.host}:#{Shell.configuration.port}"
+        end
       end
     end
   end

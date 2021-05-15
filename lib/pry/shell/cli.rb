@@ -10,35 +10,27 @@ class Pry
         def run
           options.parse!
 
-          Shell.run(**config)
+          Shell.run
 
           join_drb_thread
         end
 
         private
 
-        def config
-          @config ||= {
-            host: DEFAULT_HOST,
-            port: DEFAULT_PORT,
-            auto_connect: false
-          }
-        end
-
         def options # rubocop:disable Metrics/MethodLength
           @parser = OptionParser.new do |o|
             o.banner = "Usage: bundle exec pry-shell [options]"
 
             o.on "-h", "--host HOST", "Host name" do |arg|
-              config[:host] = arg
+              Shell.configuration.host = arg
             end
 
             o.on "-p", "--post PORT", "Port of the shell application" do |arg|
-              config[:port] = arg
+              Shell.configuration.port = arg
             end
 
             o.on "-a", "--auto-connect", "Connect automatically to the first Pry session" do
-              config[:auto_connect] = true
+              Shell.configuration.auto_connect = true
             end
 
             o.on "-v", "--version", "Print version and exit" do
