@@ -23,6 +23,8 @@ begin
             @pry = Pry.start_without_pry_byebug(new_binding, Pry::Shell.active_shell_options)
           end
         end
+      rescue DRb::DRbConnError
+        puts "DRb connection failed!"
       ensure
         Pry::Shell.clear_shell_options!
       end
