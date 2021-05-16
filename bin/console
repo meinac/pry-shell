@@ -11,6 +11,20 @@ require "pry/shell"
 # require "pry"
 # Pry.start
 
-a = 1
+def foo1
+  binding.pry_shell(with_byebug: true)
 
-binding.pry_shell
+  foo2
+end
+
+def foo2
+  foo3
+end
+
+def foo3
+  5
+end
+
+a = 5 + foo1
+
+puts a
