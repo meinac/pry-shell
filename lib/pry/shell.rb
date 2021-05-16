@@ -41,6 +41,10 @@ class Pry
         Thread.current[:active_shell_options] = value
       end
 
+      def clear_shell_options!
+        self.active_shell_options = nil
+      end
+
       def configuration
         @configuration ||= Configuration.new
       end

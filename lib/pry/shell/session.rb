@@ -13,15 +13,16 @@ class Pry
   class Shell
     class Session
       class << self
-        def run(object, host:, port:)
-          new(object, host, port).run
+        def run(object, host:, port:, with_byebug:)
+          new(object, host, port, with_byebug).run
         end
       end
 
-      def initialize(object, host, port)
+      def initialize(object, host, port, with_byebug)
         @object = object
         @host = host
         @port = port
+        @with_byebug = with_byebug
       end
 
       def run
@@ -31,15 +32,21 @@ class Pry
       rescue DRb::DRbConnError
         puts "DRb connection failed!"
       ensure
-        Shell.active_shell_options = nil
+        # Since we run `Byebug.current_context.step_out` this ensure
+        # block already runs and clears the options which are necessary
+        # to setup the Byebug.
+        # We are clearing this options in `PryShellProcessor` to ensure
+        # they do not leak.
+        Shell.clear_shell_options! unless with_byebug
       end
 
       private
 
-      attr_reader :object, :host, :port
+      attr_reader :object, :host, :port, :with_byebug
 
       def pry_options
         {
+          with_byebug: with_byebug,
           driver: Pry::Shell::Repl,
           pager: false,
           input: client.input,
