@@ -45,6 +45,10 @@ class Pry
         self.active_shell_options = nil
       end
 
+      def remove_active_connection!
+        active_shell_options&.fetch(:remove_connection)&.call
+      end
+
       def configuration
         @configuration ||= Configuration.new
       end

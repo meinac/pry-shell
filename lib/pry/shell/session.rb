@@ -46,6 +46,7 @@ class Pry
 
       def pry_options
         {
+          remove_connection: -> { registry.remove(client) },
           with_byebug: with_byebug,
           driver: Pry::Shell::Repl,
           pager: false,

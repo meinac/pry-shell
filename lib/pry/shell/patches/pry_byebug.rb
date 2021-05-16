@@ -6,27 +6,43 @@ begin
 
   module Byebug
     class PryShellProcessor < PryProcessor
-      def self.start
-        Byebug.start
-        Setting[:autolist] = false
-        Context.processor = self
-        Byebug.current_context.step_out(7, true)
+      class << self
+        def start
+          Byebug.start
+          Setting[:autolist] = false
+          Context.processor = self
+          Byebug.current_context.step_out(7, true)
+          at_exit { teardown! }
+        end
+
+        private
+
+        def teardown!
+          Pry::Shell.remove_active_connection!
+          Pry::Shell.clear_shell_options!
+        end
       end
 
       def resume_pry
-        new_binding = frame._binding
-
         run do
-          if defined?(@pry) && @pry
-            Pry::Shell::Repl.new(@pry, target: new_binding).start
-          else
-            @pry = Pry.start_without_pry_byebug(new_binding, Pry::Shell.active_shell_options)
-          end
+          pry_started? ? start_new_pry_repl : start_new_pry_session
         end
       rescue DRb::DRbConnError
         puts "DRb connection failed!"
-      ensure
-        Pry::Shell.clear_shell_options!
+      end
+
+      private
+
+      def pry_started?
+        defined?(@pry) && @pry
+      end
+
+      def start_new_pry_session
+        @pry = Pry.start_without_pry_byebug(frame._binding, Pry::Shell.active_shell_options)
+      end
+
+      def start_new_pry_repl
+        Pry::Shell::Repl.new(@pry, target: frame._binding).start
       end
     end
   end
