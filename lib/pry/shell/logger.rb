@@ -7,7 +7,7 @@ require "fileutils"
 class Pry
   class Shell
     class Logger
-      LOG_FOLDER = "tmp"
+      LOG_FOLDER = "log"
 
       class << self
         extend Forwardable
