@@ -31,6 +31,8 @@ class Pry
       def run
         run_server
         draw_ui
+      rescue TTY::Reader::InputInterrupt, Interrupt
+        exit
       end
 
       def active_shell_options(thread: Thread.current)
