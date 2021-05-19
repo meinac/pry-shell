@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Here's a [video showing how to use pry-shell](https://www.youtube.com/watch?v=Lzs_PL_BySo).
 
 ## Development
 
