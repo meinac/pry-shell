@@ -65,11 +65,23 @@ begin
             end
           end
         end
+
+        module PryProcessor
+          def start
+            super
+
+            # We should step out one more frame as we are
+            # prepending another module to the hierarchy
+            ::Byebug.current_context.step_out(5, true)
+          end
+        end
       end
     end
   end
 
   Pry.singleton_class.prepend(Pry::Shell::Patches::PryByebug)
   Pry.singleton_class.alias_method(:start, :start_with_pry_byebug)
+
+  Byebug::PryProcessor.singleton_class.prepend(Pry::Shell::Patches::PryProcessor)
 rescue LoadError # rubocop:disable Lint/SuppressedException
 end
