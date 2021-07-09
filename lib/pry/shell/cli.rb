@@ -29,8 +29,8 @@ class Pry
               Shell.configuration.port = arg
             end
 
-            o.on "-a", "--auto-connect", "Connect automatically to the first Pry session" do
-              Shell.configuration.auto_connect = true
+            o.on "--disable-auto-connect", "Disable auto connect feature" do
+              Shell.configuration.auto_connect = false
             end
 
             o.on "-v", "--version", "Print version and exit" do

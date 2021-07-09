@@ -6,7 +6,7 @@ class Pry
       CONFIG_KEYS = {
         host: "localhost",
         port: "1881",
-        auto_connect: false
+        auto_connect: true
       }.freeze
 
       CONFIG_KEYS.each do |config_key, default_value|
