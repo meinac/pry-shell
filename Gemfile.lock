@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pry-shell (0.4.1)
+    pry-shell (0.5.0)
       pry (~> 0.13.0)
       tty-markdown
       tty-prompt
