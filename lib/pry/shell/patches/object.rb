@@ -4,7 +4,7 @@ class Pry
   class Shell
     module Patches
       module Object
-        def pry_shell(host: DEFAULT_HOST, port: DEFAULT_PORT, with_byebug: false)
+        def pry_shell(host: DEFAULT_HOST, port: DEFAULT_PORT, with_byebug: true)
           Session.run(self, host: host, port: port, with_byebug: with_byebug)
         end
       end

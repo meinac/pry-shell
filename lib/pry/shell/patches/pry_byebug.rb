@@ -58,7 +58,7 @@ begin
           end
 
           def start_with_pry_shell(target)
-            if Shell.active_shell_options[:with_byebug]
+            if Shell.active_shell_options[:enable_byebug?]
               ::Byebug::PryShellProcessor.start
             else
               start_without_pry_byebug(target, Shell.active_shell_options)

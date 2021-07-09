@@ -37,7 +37,7 @@ class Pry
         # to setup the Byebug.
         # We are clearing this options in `PryShellProcessor` to ensure
         # they do not leak.
-        Shell.clear_shell_options! unless with_byebug
+        Shell.clear_shell_options! unless enable_byebug?
       end
 
       private
@@ -47,7 +47,7 @@ class Pry
       def pry_options
         {
           remove_connection: -> { registry.remove(client) },
-          with_byebug: with_byebug,
+          enable_byebug?: enable_byebug?,
           driver: Pry::Shell::Repl,
           pager: false,
           input: client.input,
@@ -55,6 +55,12 @@ class Pry
           editor: client.editor,
           pager_proxy: client.pager_proxy # This is our own config
         }
+      end
+
+      # Setting the `with_byebug` option as `true` is not enough as the
+      # `pry-byebug` gem can be missing which we are currently depending on.
+      def enable_byebug?
+        with_byebug && defined?(::Byebug::PryShellProcessor)
       end
 
       def client
