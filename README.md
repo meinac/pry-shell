@@ -42,7 +42,7 @@ binding.pry_shell(with_byebug: false)
 
 ### Get access to the Pry session
 
-Start the shell, add a breakpoint and make your program hit the desired code section. Afterwards, choose "Available sessions" from the shell main manu and hit "Enter". Then select your desired pry session and hit "Enter".
+Start the shell, add a breakpoint and make your program hit the desired code section. Afterwards, choose "Available sessions" from the shell main menu and hit "Enter". Then select your desired pry session and hit "Enter".
 
 ## Development
 
