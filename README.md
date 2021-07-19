@@ -2,8 +2,6 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pry/shell`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -23,6 +21,28 @@ Or install it yourself as:
 ## Usage
 
 Here's a [video showing how to use pry-shell](https://www.youtube.com/watch?v=Lzs_PL_BySo).
+
+### Start the shell
+
+    $ pry-shell
+
+### Add breakpoints
+
+Include this snippet in the code line you are interested:
+
+```ruby
+binding.pry_shell
+```
+
+Or also with [Byebug](https://github.com/deivid-rodriguez/byebug) support *(experimental)*:
+
+```ruby
+binding.pry_shell(with_byebug: true)
+```
+
+### Get access to the Pry session
+
+Start the shell, add a breakpoint and make your program hit the desired code section. Afterwards, choose "Available sessions" from the shell main manu and hit "Enter". Then select your desired pry session and hit "Enter".
 
 ## Development
 
