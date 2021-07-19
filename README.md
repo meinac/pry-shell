@@ -34,10 +34,10 @@ Include this snippet in the code line you are interested:
 binding.pry_shell
 ```
 
-Or also with [Byebug](https://github.com/deivid-rodriguez/byebug) support *(experimental)*:
+PryShell will enable [Byebug](https://github.com/deivid-rodriguez/byebug) by default if the `pry-byebug` gem has already been installed. In case if you want to disable byebug, you can set the `with_byebug` option as false, like so;
 
 ```ruby
-binding.pry_shell(with_byebug: true)
+binding.pry_shell(with_byebug: false)
 ```
 
 ### Get access to the Pry session
