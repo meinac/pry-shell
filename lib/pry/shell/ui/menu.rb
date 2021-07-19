@@ -20,6 +20,15 @@ class Pry
 
         class << self
           def draw_content
+            prompt.on(:keypress) do |event|
+              if event.value == "j"
+                prompt.trigger(:keydown)
+              end
+
+              if event.value == "k"
+                prompt.trigger(:keyup)
+              end
+            end
             selection = prompt.select("Select a menu item", ITEMS)
 
             switch_to(selection)
