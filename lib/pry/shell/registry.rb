@@ -44,11 +44,12 @@ class Pry
       end
 
       def remove(client)
-        @current = nil
-
         @clients.delete(client.id)
 
-        UI.restart!
+        if client.current?
+          @current = nil
+          UI.restart!
+        end
       end
     end
   end
