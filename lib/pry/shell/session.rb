@@ -37,7 +37,11 @@ class Pry
         # to setup the Byebug.
         # We are clearing this options in `PryShellProcessor` to ensure
         # they do not leak.
-        Shell.clear_shell_options! unless enable_byebug?
+        unless enable_byebug?
+          pry_options[:remove_connection].call
+
+          Shell.clear_shell_options!
+        end
       end
 
       private

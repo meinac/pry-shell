@@ -7,11 +7,21 @@ class Pry
     module IO
       class Input < Base
         def readline(prompt)
+          drb_thread
+
           wait_until_current
 
           string = object.readline(prompt, true)
 
           Command.execute(client, string)
+        rescue
+          drb_thread.kill
+
+          nil
+        end
+
+        def drb_thread
+          @drb_thread ||= Thread.current
         end
 
         # Assigns the `completion_proc` given by the
