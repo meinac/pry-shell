@@ -25,6 +25,8 @@ class Pry
             @pry.complete inp
           end
         end
+      rescue
+        input.completion_proc = nil
       end
 
       def read_command(current_prompt)
