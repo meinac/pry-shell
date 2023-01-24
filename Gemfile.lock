@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     pry-shell (0.5.1)
-      pry (~> 0.13.0)
+      pry (>= 0.13.0)
       tty-markdown
       tty-prompt
 
@@ -21,12 +21,12 @@ GEM
       ast (~> 2.4.1)
     pastel (0.8.0)
       tty-color (~> 0.5)
-    pry (0.13.1)
+    pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    pry-byebug (3.9.0)
+    pry-byebug (3.10.1)
       byebug (~> 11.0)
-      pry (~> 0.13.0)
+      pry (>= 0.13, < 0.15)
     rainbow (3.0.0)
     rake (13.0.3)
     regexp_parser (2.1.1)
