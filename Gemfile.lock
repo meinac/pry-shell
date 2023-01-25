@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pry-shell (0.5.1)
+    pry-shell (0.6.0)
       pry (>= 0.13.0)
       tty-markdown
       tty-prompt
@@ -31,7 +31,7 @@ GEM
     rake (13.0.3)
     regexp_parser (2.1.1)
     rexml (3.2.5)
-    rouge (3.29.0)
+    rouge (3.30.0)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -64,7 +64,7 @@ GEM
     strings-ansi (0.2.0)
     tty-color (0.6.0)
     tty-cursor (0.7.1)
-    tty-markdown (0.7.0)
+    tty-markdown (0.7.1)
       kramdown (>= 1.16.2, < 3.0)
       pastel (~> 0.8)
       rouge (~> 3.14)
@@ -84,6 +84,7 @@ GEM
     wisper (2.0.1)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-darwin-19
 
 DEPENDENCIES
