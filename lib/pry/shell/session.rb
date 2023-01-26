@@ -28,7 +28,7 @@ class Pry
       def run
         Shell.active_shell_options = pry_options
 
-        Pry.start(object, pry_options)
+        Pry.start(pry_options.merge(target: object))
       rescue DRb::DRbConnError
         puts "DRb connection failed!"
       ensure

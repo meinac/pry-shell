@@ -38,7 +38,7 @@ begin
       end
 
       def start_new_pry_session
-        @pry = Pry.start_without_pry_byebug(frame._binding, Pry::Shell.active_shell_options)
+        @pry = Pry::REPL.start_without_pry_byebug(Pry::Shell.active_shell_options.merge(target: frame._binding))
       end
 
       def start_new_pry_repl
@@ -51,17 +51,16 @@ begin
     class Shell
       module Patches
         module PryByebug
-          def start_with_pry_byebug(target = nil, options = {})
-            return start_with_pry_shell(target) if Shell.active_shell_options
-
+          def start_with_pry_byebug(options = {})
+            return start_with_pry_shell(options) if Shell.active_shell_options
             super
           end
 
-          def start_with_pry_shell(target)
+          def start_with_pry_shell(options = {})
             if Shell.active_shell_options[:enable_byebug?]
               ::Byebug::PryShellProcessor.start
             else
-              start_without_pry_byebug(target, Shell.active_shell_options)
+              start_without_pry_byebug(options)
             end
           end
         end
@@ -79,8 +78,8 @@ begin
     end
   end
 
-  Pry.singleton_class.prepend(Pry::Shell::Patches::PryByebug)
-  Pry.singleton_class.alias_method(:start, :start_with_pry_byebug)
+  Pry::REPL.singleton_class.prepend(Pry::Shell::Patches::PryByebug)
+  Pry::REPL.singleton_class.alias_method(:start, :start_with_pry_byebug)
 
   Byebug::PryProcessor.singleton_class.prepend(Pry::Shell::Patches::PryProcessor)
 rescue LoadError # rubocop:disable Lint/SuppressedException
