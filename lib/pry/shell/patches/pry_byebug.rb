@@ -11,7 +11,7 @@ begin
           Byebug.start
           Setting[:autolist] = false
           Context.processor = self
-          Byebug.current_context.step_out(7, true)
+          Byebug.current_context.step_out(8, true)
           at_exit { teardown! }
         end
 
@@ -38,7 +38,9 @@ begin
       end
 
       def start_new_pry_session
-        @pry = Pry.start_without_pry_byebug(frame._binding, Pry::Shell.active_shell_options)
+        repl_options = Pry::Shell.active_shell_options.merge(target: frame._binding)
+
+        @pry = Pry::Shell::Repl.start_without_pry_byebug(repl_options)
       end
 
       def start_new_pry_repl
@@ -51,17 +53,17 @@ begin
     class Shell
       module Patches
         module PryByebug
-          def start_with_pry_byebug(target = nil, options = {})
-            return start_with_pry_shell(target) if Shell.active_shell_options
+          def start_with_pry_byebug(options = {})
+            return start_with_pry_shell(options) if Shell.active_shell_options
 
             super
           end
 
-          def start_with_pry_shell(target)
+          def start_with_pry_shell(options)
             if Shell.active_shell_options[:enable_byebug?]
               ::Byebug::PryShellProcessor.start
             else
-              start_without_pry_byebug(target, Shell.active_shell_options)
+              start_without_pry_byebug(options)
             end
           end
         end
@@ -72,15 +74,15 @@ begin
 
             # We should step out one more frame as we are
             # prepending another module to the hierarchy
-            ::Byebug.current_context.step_out(5, true)
+            ::Byebug.current_context.step_out(6, true)
           end
         end
       end
     end
   end
 
-  Pry.singleton_class.prepend(Pry::Shell::Patches::PryByebug)
-  Pry.singleton_class.alias_method(:start, :start_with_pry_byebug)
+  Pry::REPL.singleton_class.prepend(Pry::Shell::Patches::PryByebug)
+  Pry::REPL.singleton_class.alias_method(:start, :start_with_pry_byebug)
 
   Byebug::PryProcessor.singleton_class.prepend(Pry::Shell::Patches::PryProcessor)
 rescue LoadError # rubocop:disable Lint/SuppressedException
