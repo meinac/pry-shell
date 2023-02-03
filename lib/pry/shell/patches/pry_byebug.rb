@@ -15,8 +15,6 @@ begin
           at_exit { teardown! }
         end
 
-        private
-
         def teardown!
           Pry::Shell.remove_active_connection!
           Pry::Shell.clear_shell_options!
@@ -26,6 +24,9 @@ begin
       def resume_pry
         run do
           pry_started? ? start_new_pry_repl : start_new_pry_session
+
+          # Close shell session after repl loop
+          self.class.teardown!
         end
       rescue DRb::DRbConnError
         puts "DRb connection failed!"
