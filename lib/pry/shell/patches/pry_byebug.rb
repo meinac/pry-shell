@@ -21,6 +21,13 @@ begin
         end
       end
 
+      def initialize(...)
+        super
+
+        # Set the interface for byebug outputs
+        @interface = Byebug::RemoteInterface.new(Pry::Shell.active_shell_options[:output])
+      end
+
       def resume_pry
         run do
           pry_started? ? start_new_pry_repl : start_new_pry_session
