@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    pry-shell (0.6.1)
+    pry-shell (0.6.2)
       pry (>= 0.13.0)
-      tty-markdown
+      tty-markdown (= 0.7.1)
       tty-prompt
 
 GEM
