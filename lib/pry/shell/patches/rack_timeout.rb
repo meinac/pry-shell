@@ -16,7 +16,7 @@ class Pry
 end
 
 begin
-  require "rack-timeout"
+  require "rack/timeout/base"
 
   Rack::Timeout::Scheduler::Timeout.prepend(Pry::Shell::Patches::RackTimeout)
 rescue LoadError # rubocop:disable Lint/SuppressedException
